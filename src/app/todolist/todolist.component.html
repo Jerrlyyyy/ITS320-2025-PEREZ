@@ -1,0 +1,42 @@
+<div class="container">
+  <div class="todo-card">
+    <h2>Todo List</h2>
+
+    <input
+      class="todo-input"
+      [formControl]="todoInput"
+      (keydown.enter)="addTodo()"
+      placeholder="Enter a new task"
+    />
+
+    <div class="button-group">
+      <button class="add-button" (click)="addTodo()">Add</button>
+      <button class="save-button" (click)="saveTodos()">Save</button>
+    </div>
+
+    <ul class="todo-list">
+      <li *ngFor="let todo of todos" class="todo-item">
+        <div class="todo-content">
+          <!-- Display regular text or edit input based on editing state -->
+          <span *ngIf="!todo.isEditing" [class.completed]="todo.completed">{{ todo.task }}</span>
+          <input *ngIf="todo.isEditing" 
+                 [(ngModel)]="todo.editTask" 
+                 class="edit-input" 
+                 (keydown.enter)="updateTodo(todo)"
+                 (keydown.escape)="todo.isEditing = false">
+          
+          <div class="todo-actions">
+            <!-- Show different buttons based on editing state -->
+            <button *ngIf="!todo.isEditing" class="edit-button" (click)="startEdit(todo)">
+              Edit
+            </button>
+            <button *ngIf="todo.isEditing" class="save-button" (click)="updateTodo(todo)">
+              Save
+            </button>
+            <button class="delete-button" (click)="deleteTodo(todo._id)">Delete</button>
+          </div>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>

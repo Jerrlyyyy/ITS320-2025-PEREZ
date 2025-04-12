@@ -1,9 +1,34 @@
-import { ApplicationConfig, provideZoneChangeDetection } from '@angular/core';
-import { provideRouter } from '@angular/router';
+// If using NgModules in app.module.ts
+import { NgModule } from '@angular/core';
+import { BrowserModule } from '@angular/platform-browser';
+import { HttpClientModule } from '@angular/common/http';
+import { ReactiveFormsModule } from '@angular/forms';
 
-import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { AppComponent } from './app.component';
+import { TodolistComponent } from './todolist/todolist.component';
+
+@NgModule({
+  declarations: [
+
+  ],
+  imports: [
+    BrowserModule,
+    HttpClientModule,
+    ReactiveFormsModule,
+    // If using standalone components:
+    TodolistComponent
+  ],
+  providers: [],
+  bootstrap: []
+})
+export class AppModule { }
+
+// If using standalone components with app.config.ts
+import { ApplicationConfig } from '@angular/core';
+import { provideHttpClient } from '@angular/common/http';
 
 export const appConfig: ApplicationConfig = {
-  providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes), provideClientHydration(withEventReplay())]
+  providers: [
+    provideHttpClient()
+  ]
 };
